@@ -1,7 +1,9 @@
 import users from './users';
+import yelp from './yelp';
 
-export { users };
+export { users, yelp };
 
 export default {
-  users
+  users,
+  yelp
 };

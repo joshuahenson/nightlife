@@ -6,6 +6,7 @@ import unsupportedMessage from '../db/unsupportedMessage';
 import { controllers, passport as passportConfig } from '../db';
 
 const usersController = controllers && controllers.users;
+const yelpController = controllers && controllers.yelp;
 
 export default (app) => {
   // user routes
@@ -40,5 +41,11 @@ export default (app) => {
         failureRedirect: '/login'
       })
     );
+  }
+  // yelp routes
+  if (yelpController) {
+    app.get('/searchBars', yelpController.searchBars);
+  } else {
+    console.warn(unsupportedMessage('yelp routes'));
   }
 };

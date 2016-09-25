@@ -17,7 +17,7 @@ const App = ({children}) => {
   return (
     <div>
       <Helmet
-        title="React"
+        title="Nightlife"
         titleTemplate="%s - Universal React Example"
       />
       <Navigation />

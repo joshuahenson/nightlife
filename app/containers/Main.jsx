@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { searchLocation } from '../actions/yelp';
+import DisplayBars from './DisplayBars';
 
 
 class Main extends Component {
@@ -35,6 +36,7 @@ class Main extends Component {
             </div>
           </div>
         </div>
+        <DisplayBars />
       </div>
     );
   }

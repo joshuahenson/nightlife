@@ -11,3 +11,7 @@ export const IS_WAITING = 'IS_WAITING';
 export const IS_NOT_WAITING = 'IS_NOT_WAITING';
 
 export const ADD_BARS = 'ADD_BARS';
+export const ADD_USER = 'ADD_USER';
+export const REMOVE_USER = 'REMOVE_USER';
+export const INCREASE_COUNT = 'INCREASE_COUNT';
+export const DECREASE_COUNT = 'DECREASE_COUNT';

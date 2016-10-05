@@ -1,16 +1,18 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { toggleGoing, addUser } from '../actions/yelp';
+import { userIsGoing, userNotGoing } from '../actions/yelp';
 
-// helper function that takes array of userId's and determines if particular userId is present
-const determineUserGoing = (addUser, bar, userId) => {
-  if (bar.usersGoing.indexOf(userId) > -1) {
-    addUser(bar, userId);
+// TODO: CHECK IF AUTH FIRST
+const toggleGoing = (userId, userGoing, barId, userIsGoing, userNotGoing) => {
+  if (userGoing) {
+    userNotGoing(barId, userId);
+  } else {
+    userIsGoing(barId, userId);
   }
 };
 
 // TODO: Fix super rough layout
-const DisplayBars = ({ bars, userId, toggleGoing, addUser }) => {
+const DisplayBars = ({ bars, userId, userIsGoing, userNotGoing }) => {
   return (
     <div className="row top10">
       <div className="col-xs-12">
@@ -21,11 +23,10 @@ const DisplayBars = ({ bars, userId, toggleGoing, addUser }) => {
                 <td><img role="presentation" src={bar.image_url} /></td>
                 <td>{bar.name}</td>
                 <td>
-                  {determineUserGoing(addUser, bar, userId)}
                   <button
                     className={bar.userGoing ? 'btn btn-primary' : 'btn btn-default'}
                     type="button"
-                    onClick={() => toggleGoing(userId, bar.userGoing, bar.id)}>
+                    onClick={() => toggleGoing(userId, bar.userGoing, bar.id, userIsGoing, userNotGoing)}>
                     {`${bar.count} going`}
                   </button>
                 </td>
@@ -40,8 +41,8 @@ const DisplayBars = ({ bars, userId, toggleGoing, addUser }) => {
 
 DisplayBars.propTypes = {
   bars: PropTypes.array,
-  toggleGoing: PropTypes.func,
-  addUser: PropTypes.func,
+  userIsGoing: PropTypes.func,
+  userNotGoing: PropTypes.func,
   userId: PropTypes.string
 };
 
@@ -52,4 +53,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, {toggleGoing, addUser})(DisplayBars);
+export default connect(mapStateToProps, {userIsGoing, userNotGoing})(DisplayBars);

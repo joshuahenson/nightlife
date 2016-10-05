@@ -2,47 +2,61 @@ import Yelp from 'yelp';
 import {yelpSecret} from '../../../config/secrets';
 import YelpS from '../models/yelp';
 
-function findBusiness(business) {
+export function searchBars(req, res) {
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  let count = 0;
-  let usersGoing = [];
-  YelpS.findOne({created_on: {$gte: today}, yelpId: business.id}, (err, doc) => {
-      if (err) {
-        console.log(err);
-      }
-      if (doc) {
-        count = doc.count;
-        usersGoing = doc.usersGoing;
-      }
-    });
-  return {count, usersGoing};
-}
-
-export function searchBars(req, res) {
   const yelp = new Yelp(yelpSecret);
   const location = req.query.location;
+  const userId = req.query.userId;
   yelp.search({ category_filter: 'bars', location })
-  .then((data) => {
-    const newData = data.businesses.map((business) => {
-      const dbResults = findBusiness(business);
-      return {
-        name: business.name,
-        image_url: business.image_url,
-        id: business.id,
-        usersGoing: dbResults.usersGoing,
-        userGoing: false,
-        count: dbResults.count
-      };
-    });
-    res.json(newData);
+  .then((yelpResults) => yelpResults.businesses)
+  .then(yelpResults => {
+    return YelpS.find({date: {$gte: today}}).exec()
+      .then(dbResults => {
+        const bars = yelpResults.map(bar => {
+          const matchingBar = dbResults.find(y => y.yelpId === bar.id);
+          if (matchingBar) {
+            return {
+              name: bar.name,
+              image_url: bar.image_url,
+              id: bar.id,
+              userGoing: matchingBar.usersGoing.indexOf(userId) > -1,
+              count: matchingBar.count
+            };
+          } // else
+          return {
+            name: bar.name,
+            image_url: bar.image_url,
+            id: bar.id,
+            userGoing: false,
+            count: 0
+          };
+        });
+        return bars;
+      });
   })
-  .catch((err) => {
-    res.status(500).send(err);
-    console.error(err);
+  .then(results => res.json(results));
+}
+
+export function addUser(req, res) {
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const locationId = req.body.locationId;
+  const userId = req.body.userId;
+  YelpS.findOneAndUpdate(
+    {created_on: {$gte: today}, yelpId: locationId},
+    {$push: {usersGoing: userId}, $inc: {count: 1}},
+    {upsert: true, setDefaultsOnInsert: true},
+    (err) => {
+      if (err) {
+        console.error(err);
+        res.status(500).end();
+      }
+      res.status(200).end();
   });
 }
 
 export default {
-  searchBars
+  searchBars,
+  addUser
 };

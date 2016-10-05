@@ -15,7 +15,9 @@ class Main extends Component {
     this.setState({value: event.target.value});
   }
   submit() {
-    this.props.searchLocation(this.state.value);
+    const { searchLocation, userId } = this.props;
+    console.log(userId);
+    searchLocation(this.state.value, userId);
   }
   render() {
     return (
@@ -43,7 +45,13 @@ class Main extends Component {
 }
 
 Main.propTypes = {
-  searchLocation: PropTypes.func
+  searchLocation: PropTypes.func,
+  userId: PropTypes.string
 };
 
-export default connect(null, { searchLocation })(Main);
+function mapStateToProps(state) {
+  return {
+    userId: state.user.userId
+  };
+}
+export default connect(mapStateToProps, { searchLocation })(Main);

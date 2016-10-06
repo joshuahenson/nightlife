@@ -2,6 +2,7 @@ import Yelp from 'yelp';
 import {yelpSecret} from '../../../config/secrets';
 import YelpS from '../models/yelp';
 
+// TODO: catch
 export function searchBars(req, res) {
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -43,8 +44,8 @@ export function addUser(req, res) {
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const locationId = req.body.locationId;
   const userId = req.body.userId;
-  YelpS.findOneAndUpdate(
-    {created_on: {$gte: today}, yelpId: locationId},
+  YelpS.update(
+    {date: {$gte: today}, yelpId: locationId},
     {$push: {usersGoing: userId}, $inc: {count: 1}},
     {upsert: true, setDefaultsOnInsert: true},
     (err) => {
@@ -56,7 +57,25 @@ export function addUser(req, res) {
   });
 }
 
+export function removeUser(req, res) {
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const locationId = req.body.locationId;
+  const userId = req.body.userId;
+  YelpS.update(
+    {date: {$gte: today}, yelpId: locationId},
+    {$pull: {usersGoing: userId}, $inc: {count: -1}},
+    (err) => {
+      if (err) {
+        console.error(err);
+        res.status(500).end();
+      }
+      res.status(200).end();
+  });
+}
+
 export default {
   searchBars,
-  addUser
+  addUser,
+  removeUser
 };

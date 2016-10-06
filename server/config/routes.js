@@ -46,7 +46,7 @@ export default (app) => {
   if (yelpController) {
     app.get('/searchBars', yelpController.searchBars);
     app.post('/addUser', yelpController.addUser);
-    // TODO removeUser
+    app.post('/removeUser', yelpController.removeUser);
   } else {
     console.warn(unsupportedMessage('yelp routes'));
   }

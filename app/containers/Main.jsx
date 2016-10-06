@@ -20,6 +20,7 @@ class Main extends Component {
     searchLocation(this.state.value, userId);
   }
   render() {
+    const {searching} = this.props;
     return (
       <div>
         <h4 className="text-center">What area would you like to search?</h4>
@@ -31,8 +32,8 @@ class Main extends Component {
               type="text" className="form-control" id="locationInput"
               value={this.state.value} onChange={this.handleChange} />
               <span className="input-group-btn">
-                <button className="btn btn-primary" type="button" onClick={this.submit}>
-                  <span className="glyphicon glyphicon-glass" aria-hidden="true" />&nbsp;&nbsp;Let's Go!
+                <button className="btn btn-primary" type="button" onClick={this.submit} disabled={searching}>
+                  {searching ? <i className="fa fa-circle-o-notch fa-spin" /> : <i className="fa fa-glass" aria-hidden="true" />} &nbsp;&nbsp;Let's Go!
                 </button>
               </span>
             </div>
@@ -46,12 +47,14 @@ class Main extends Component {
 
 Main.propTypes = {
   searchLocation: PropTypes.func,
-  userId: PropTypes.string
+  userId: PropTypes.string,
+  searching: PropTypes.bool
 };
 
 function mapStateToProps(state) {
   return {
-    userId: state.user.userId
+    userId: state.user.userId,
+    searching: state.searching
   };
 }
 export default connect(mapStateToProps, { searchLocation })(Main);

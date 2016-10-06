@@ -9,15 +9,26 @@ export function addBars(bars) {
   };
 }
 
+export function searching(boolean) {
+  return {
+    type: types.SEARCHING,
+    boolean
+  };
+}
+
 export function searchLocation(location, userId) {
   return dispatch => {
+    dispatch(searching(true));
     axios.get('/searchBars', {
-    params: {
-      location,
-      userId
-    }
-  })
-      .then(res => dispatch(addBars(res.data)));
+      params: {
+        location,
+        userId
+      }
+    })
+      .then(res => {
+        dispatch(searching(false));
+        dispatch(addBars(res.data));
+      });
   };
 }
 

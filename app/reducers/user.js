@@ -46,7 +46,7 @@ const authenticated = (
 };
 
 const userName = (
-  state = null,
+  state = '',
   action
 ) => {
   switch (action.type) {
@@ -61,7 +61,7 @@ const userName = (
 };
 
 const userId = (
-  state = null,
+  state = '',
   action
 ) => {
   switch (action.type) {

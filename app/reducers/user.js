@@ -51,7 +51,7 @@ const userName = (
 ) => {
   switch (action.type) {
     case types.LOGOUT_SUCCESS_USER:
-      return null;
+      return '';
     case types.LOGIN_SUCCESS_USER:
     case types.SIGNUP_SUCCESS_USER:
       return action.userName;
@@ -66,7 +66,7 @@ const userId = (
 ) => {
   switch (action.type) {
     case types.LOGOUT_SUCCESS_USER:
-      return null;
+      return '';
     case types.LOGIN_SUCCESS_USER:
     case types.SIGNUP_SUCCESS_USER:
       return action.userId;

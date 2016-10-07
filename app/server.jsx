@@ -58,8 +58,8 @@ export default function render(req, res) {
       isLogin: true,
       isWaiting: false,
       submittingGoogle: false,
-      userId: req.user ? req.user._id : null,
-      userName: req.user ? req.user.profile.name : null
+      userId: req.user ? req.user._id : '',
+      userName: req.user ? req.user.profile.name : ''
     }
   }, history);
   const routes = createRoutes(store);

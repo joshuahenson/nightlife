@@ -16,16 +16,15 @@ class Main extends Component {
   }
   submit() {
     const { searchLocation, userId } = this.props;
-    console.log(userId);
     searchLocation(this.state.value, userId);
   }
   render() {
     const {searching} = this.props;
     return (
       <div>
-        <h4 className="text-center">What area would you like to search?</h4>
+        <h4 className="text-center">Where would you like to search?</h4>
         <div className="row">
-          <div className="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
+          <div className="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
             <div className="input-group">
               <label className="sr-only" htmlFor="locationInput">Search for locations</label>
               <input

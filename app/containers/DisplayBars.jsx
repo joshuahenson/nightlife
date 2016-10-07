@@ -11,18 +11,17 @@ const toggleGoing = (userId, userGoing, barId, userIsGoing, userNotGoing) => {
   }
 };
 
-// TODO: Fix super rough layout
 const DisplayBars = ({ bars, userId, userIsGoing, userNotGoing }) => {
   return (
     <div className="row top10">
-      <div className="col-xs-12">
-        <table className="table table-striped">
+      <div className="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+        <table className="table table-striped table-responsive">
           <tbody>
             {bars.map((bar, index) =>
               <tr key={index}>
                 <td><img role="presentation" src={bar.image_url} /></td>
                 <td>{bar.name}</td>
-                <td>
+                <td className="text-right">
                   <button
                     className={bar.userGoing ? 'btn btn-primary' : 'btn btn-default'}
                     type="button"

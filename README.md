@@ -1,5 +1,3 @@
-# Work in Progress
-
 A sample Universal React app to further my dev skills while implementing the following user stories.
 
 * User Story: As an unauthenticated user, I can view all bars in my area.

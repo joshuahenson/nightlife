@@ -7,10 +7,6 @@ import * as types from '../types';
 const getMessage = res => res.response.data.message;
 
 // Log In Action Creators
-export function googleLogin() {
-  return { type: types.GOOGLE_LOGIN_USER };
-}
-
 export function loginSuccess(message, userName, userId) {
   return {
     type: types.LOGIN_SUCCESS_USER,

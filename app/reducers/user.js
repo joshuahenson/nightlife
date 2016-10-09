@@ -75,25 +75,10 @@ const userId = (
   }
 };
 
-const submittingGoogle = (
-  state = false,
-  action
-) => {
-  switch (action.type) {
-    case types.GOOGLE_LOGIN_USER:
-      return true;
-    case types.LOGIN_SUCCESS_USER:
-      return false;
-    default:
-      return state;
-  }
-};
-
 const userReducer = combineReducers({
   authenticated,
   isLogin,
   isWaiting,
-  submittingGoogle,
   userId,
   userName
 });

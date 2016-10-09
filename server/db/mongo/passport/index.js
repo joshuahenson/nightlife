@@ -1,11 +1,9 @@
 import deserializeUser from './deserializeUser';
-import google from './google';
 import local from './local';
 
-export { deserializeUser, google, local };
+export { deserializeUser, local };
 
 export default {
   deserializeUser,
-  google,
   local,
 };

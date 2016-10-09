@@ -24,8 +24,7 @@ const UserSchema = new mongoose.Schema({
     picture: { type: String, default: '' }
   },
   resetPasswordToken: String,
-  resetPasswordExpires: Date,
-  google: {}
+  resetPasswordExpires: Date
 });
 
 function encryptPassword(next) {

@@ -1,7 +1,6 @@
 /* Initializing passport.js */
 import passport from 'passport';
 import local from './passport/local';
-import google from './passport/google';
 import { passport as dbPassport } from '../db';
 import unsupportedMessage from '../db/unsupportedMessage';
 
@@ -26,5 +25,4 @@ export default () => {
 
   // use the following strategies
   local(passport);
-  google(passport);
 };

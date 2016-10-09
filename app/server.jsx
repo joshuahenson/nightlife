@@ -57,7 +57,6 @@ export default function render(req, res) {
       authenticated,
       isLogin: true,
       isWaiting: false,
-      submittingGoogle: false,
       userId: req.user ? req.user._id : '',
       userName: req.user ? req.user.profile.name : ''
     }

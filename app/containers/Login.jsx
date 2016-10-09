@@ -1,6 +1,5 @@
 import React, {Component, PropTypes} from 'react';
 import {reduxForm} from 'redux-form';
-import GoogleLogin from '../containers/GoogleLogin';
 import {manualLogin, toggleLoginMode} from '../actions/users';
 
 const validate = values => {
@@ -64,8 +63,6 @@ class Login extends Component {
               Clear Values
             </button>
           </div>
-          <hr />
-          <GoogleLogin />
         </form>
       </div>
     );

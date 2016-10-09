@@ -16,7 +16,9 @@ class Main extends Component {
   }
   submit() {
     const { searchLocation, userId } = this.props;
-    searchLocation(this.state.value, userId);
+    if (this.state.value) {
+      searchLocation(this.state.value, userId);
+    }
   }
   render() {
     const {searching} = this.props;

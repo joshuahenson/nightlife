@@ -2,7 +2,6 @@ import Yelp from 'yelp';
 import {yelpSecret} from '../../../config/secrets';
 import YelpS from '../models/yelp';
 
-// TODO: catch
 export function searchBars(req, res) {
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -36,7 +35,8 @@ export function searchBars(req, res) {
         return bars;
       });
   })
-  .then(results => res.json(results));
+  .then(results => res.json(results))
+  .catch(() => console.log('Error in searchBars()'));
 }
 
 export function addUser(req, res) {

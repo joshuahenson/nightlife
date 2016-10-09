@@ -7,7 +7,7 @@ import DisplayBars from './DisplayBars';
 class Main extends Component {
   constructor(props) {
     super(props);
-    this.state = {value: 'seattle'};
+    this.state = {value: ''};
     this.handleChange = this.handleChange.bind(this);
     this.submit = this.submit.bind(this);
   }

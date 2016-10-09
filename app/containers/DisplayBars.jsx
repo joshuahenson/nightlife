@@ -1,17 +1,21 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 import { userIsGoing, userNotGoing } from '../actions/yelp';
 
-// TODO: CHECK IF AUTH FIRST
-const toggleGoing = (userId, userGoing, barId, userIsGoing, userNotGoing) => {
-  if (userGoing) {
-    userNotGoing(barId, userId);
-  } else {
-    userIsGoing(barId, userId);
+const toggleGoing = (userId, userGoing, barId, userIsGoing, userNotGoing, authenticated) => {
+  if (authenticated) {
+    if (userGoing) {
+      userNotGoing(barId, userId);
+    } else {
+      userIsGoing(barId, userId);
+    }
+  } else { // not authenticated
+    browserHistory.push('/login');
   }
 };
 
-const DisplayBars = ({ bars, userId, userIsGoing, userNotGoing }) => {
+const DisplayBars = ({ bars, userId, userIsGoing, userNotGoing, authenticated }) => {
   return (
     <div className="row top10">
       <div className="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
@@ -25,7 +29,7 @@ const DisplayBars = ({ bars, userId, userIsGoing, userNotGoing }) => {
                   <button
                     className={bar.userGoing ? 'btn btn-primary' : 'btn btn-default'}
                     type="button"
-                    onClick={() => toggleGoing(userId, bar.userGoing, bar.id, userIsGoing, userNotGoing)}>
+                    onClick={() => toggleGoing(userId, bar.userGoing, bar.id, userIsGoing, userNotGoing, authenticated)}>
                     {`${bar.count} going`}
                   </button>
                 </td>
@@ -42,13 +46,15 @@ DisplayBars.propTypes = {
   bars: PropTypes.array,
   userIsGoing: PropTypes.func,
   userNotGoing: PropTypes.func,
-  userId: PropTypes.string
+  userId: PropTypes.string,
+  authenticated: PropTypes.bool
 };
 
 function mapStateToProps(state) {
   return {
     bars: state.bars,
-    userId: state.user.userId
+    userId: state.user.userId,
+    authenticated: state.user.authenticated
   };
 }
 
